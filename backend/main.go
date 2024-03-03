@@ -1,41 +1,41 @@
 package main
 
 import (
-	"fmt"
 	"html/template"
+	"io"
 	"log"
 	"net/http"
-	"os"
-  "strings"
+
+	"github.com/labstack/echo/v4"
 )
 
+type Template struct {
+    templates *template.Template
+}
+
+func (t *Template) Render(w io.Writer, name string, data interface{}, c echo.Context) error {
+	return t.templates.ExecuteTemplate(w, name, data)
+}
+
 func main()  {
-
-  http.HandleFunc("/frontend/*", staticHandler);
-  http.HandleFunc("/", indexHandler)
-  log.Fatal(http.ListenAndServe(":8000", nil));
-
-}
-
-func indexHandler(writer http.ResponseWriter, request *http.Request) {
-
-  fmt.Println("r is ", request.URL.Path);
-  tmpl := template.Must(template.ParseFiles("../frontend/index.html"));
-  tmpl.Execute(writer, nil)
-}
-
-func staticHandler(w http.ResponseWriter, r *http.Request) {
-   // load the file using r.URL.Path, like /static/scripts/index.js"
-  fmt.Println("r is ", r.URL.Path);
-  data,err:=os.ReadFile(r.URL.Path)
-  if err != nil {
-    fmt.Println("", err)
+  t := &Template{
+      templates: template.Must(template.ParseGlob("../frontend/*.html")),
   }
-   // Figure out file type:
-  if strings.HasSuffix(r.URL.Path, "js") {
-    w.Header().Set("Content-Type","text/javascript")  
-  } else {
-    w.Header().Set("Content-Type","text/css")
-  }
-   w.Write(data)
+  e := echo.New()
+  e.Renderer = t;
+  e.File("/", "../frontend/index.html");
+  e.File("/favicon.ico", "../frontend/favicon.ico");
+  e.Static("/frontend", "../frontend");
+  e.GET("/:file", defaultHandler);
+  e.Logger.Fatal(e.Start(":8000"))
+
 }
+
+//i know, its terrible!
+func defaultHandler(c echo.Context) error {
+  file := c.Param("file");
+
+  log.Println("", );
+  return c.Render(http.StatusOK, file+".html", nil)
+}
+
