@@ -1,0 +1,130 @@
+body {
+	font-family: sans-serif;
+	text-align: center;
+  color: #eee;
+  background: #121212;
+}
+html,body { height:100%; }
+
+
+#sign-up {
+  text-align: left;
+  font-size: 3em;
+}
+
+input:focus {
+  background-color: #333333;
+}
+
+#title {
+  font-size: 6em;
+}
+
+#title, #title-desc {
+  color: #ccc;
+}
+
+#title-desc {
+  text-shadow: -0.1em 0 black, 0 0.1em black, 0.1em 0 black, 0 -0.1em black;
+}
+
+#title {
+  text-shadow: -0.05em 0 black, 0 0.05em black, 0.05em 0 black, 0 -0.05em black;
+}
+
+#landing {
+  margin-left: 10em;
+  text-align: left;
+  margin-bottom: 30em;
+}
+#title-desc {
+  font-size: 2em;
+  margin-top: 2em;
+  margin-bottom: 100px;
+}
+
+.text {
+  font-size: 30px;
+  text-align: left;
+  margin-left: 60px;
+}
+
+#image {
+  overflow: auto;
+  background-image: url(../assets/background.jpg);
+  background-repeat:no-repeat,repeat,no-repeat;
+  background-size: cover;
+  background-position: left top;
+  background-attachment: fixed;
+  position:absolute;
+  width:100%;
+  height: 100%;
+  top:0px;
+  left:0px;
+  right: 0px;
+  z-index:-3;
+}
+
+#intro {
+  position: relative;
+  overflow: hidden;
+  background-color: #121212;
+  margin-top: 10px;
+  padding-top: 10px;
+  margin-left: -8px;
+  margin-right: -8px;
+  left: 0px;
+}
+
+
+.button {
+  display: inline-block;
+  padding: 15px 25px;
+  font-size: 24px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: white;
+  background-color: #333;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #222;
+}
+
+
+.button:hover {
+  background-color: #444;
+}
+
+.button:active {
+  background-color: #555;
+  box-shadow: 0 5px #222;
+  transform: translateY(4px);
+
+}
+
+
+
+/* .chatbar { */
+/*   width: 75%; */
+/*   margin: 0 auto; */
+/* } */
+/* input[type=text] { */
+/*   width: 50%; */
+/* } */
+
+/* .chatbox { */
+/*   overflow: scroll;  */
+/*   height: 35em; */
+/*   width: 75%; */
+/*   margin: 0 auto; */
+/*   margin-bottom: 20px; */
+/*   border: 5px solid #333; */
+/* } */
+
+input{
+  border: 5px solid #333;
+  background-color: #222222;
+  color: white;
+}
