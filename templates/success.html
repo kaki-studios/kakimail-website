@@ -1,18 +1,2 @@
-
-<!DOCTYPE html>
-<html>
-<head>
-  <script src="static/htmx-1.9.10/htmx.min.js"></script>
-  <link rel="stylesheet" href="static/style/main.css">
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>kakimail</title>
-</head>
-
-<body>
-    <p>success, your name is: {{ .Username }}</p>
-    <p>your base64 encoded password is: {{ .Password }}</p>
-</body>
-
-
-</html>
+<p>success, your name is: {{ .Username }}</p>
+<p>your bcrypt hashed password is: {{ .Password }}</p>
