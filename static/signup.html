@@ -2,19 +2,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <script src="static/htmx-1.9.10/htmx.min.js"></script>
-  <link rel="stylesheet" href="static/style/main.css">
+  <script src="/static/htmx-1.9.10/htmx.min.js"></script>
+  <link rel="stylesheet" href="/static/style/main.css">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>kakimail</title>
 </head>
 
 <body>
-  <p class="text">Test<p>
-  <form hx-post="/create_user">
-      <input type="text" name="username">
+  <p class="text">Sign Up<p>
+  <form method="post" action="/user/signup">
+      <label for="name">Name:</label>
+      <input type="text" name="name">
       <br>
-      <input type="text" name="password">
+      <label for="password">Password:</label>
+      <input type="password" name="password">
       <br>
       <br>
       <button type="submit" class="button">submit</button>

@@ -7,17 +7,13 @@ body {
 html,body { height:100%; }
 
 
-#sign-up {
-  text-align: left;
-  font-size: 3em;
-}
 
 input:focus {
   background-color: #333333;
 }
 
 #title {
-  font-size: 6em;
+  font-size: clamp(4rem, 4vw, 9rem);
 }
 
 #title, #title-desc {
@@ -33,20 +29,21 @@ input:focus {
 }
 
 #landing {
-  margin-left: 10em;
+  margin-top: clamp(1rem, 1vw, 2rem);
+  margin-left: clamp(3rem, 4vw, 10rem);
   text-align: left;
-  margin-bottom: 30em;
+  height: 100%;
 }
 #title-desc {
-  font-size: 2em;
+  font-size: clamp(2rem, 2vw, 3rem);
   margin-top: 2em;
-  margin-bottom: 100px;
+  margin-bottom: clamp(2rem, 7vw, 10rem);
 }
 
 .text {
-  font-size: 30px;
+  font-size: clamp(1rem, 2vw, 3rem);
   text-align: left;
-  margin-left: 60px;
+  margin-left: clamp(1rem, 2vw, 3rem);
 }
 
 #image {
@@ -54,7 +51,7 @@ input:focus {
   background-image: url(../assets/background.jpg);
   background-repeat:no-repeat,repeat,no-repeat;
   background-size: cover;
-  background-position: left top;
+  background-position: center top;
   background-attachment: fixed;
   position:absolute;
   width:100%;
@@ -78,9 +75,9 @@ input:focus {
 
 
 .button {
+  font-size: clamp(1rem, 2vw, 4rem);
   display: inline-block;
   padding: 15px 25px;
-  font-size: 24px;
   cursor: pointer;
   text-align: center;
   text-decoration: none;

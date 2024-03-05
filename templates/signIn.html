@@ -8,11 +8,15 @@
 </head>
 <html lang="en">
 <body>
-  <form class="w-full" method="post" action="/user/signin">
+  <p class="text">Sign In<p>
+  <form method="post" action="/user/signin">
+    <label for="name">Name:</label>
+    <input type="text" name="name">
+    <br>
     <label for="password">Password:</label>
     <input type="password" id="password" name="password">
-      <br>
-      <br>
+    <br>
+    <br>
     <button type="submit" class="button">Sign In</button>
   </form>
 </body>
