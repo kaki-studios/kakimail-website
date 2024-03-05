@@ -32,14 +32,9 @@ func SignUp(db *sql.DB) echo.HandlerFunc {
 		if err != nil {
 			return err
 		}
-		// dict := map[string]string{
-		// 	"Username": u.Name,
-		// 	"Password": string(hash),
-		// }
-		// i know, were making no checks and this is vulnerable to sql injection
-		// FIX!
+		// this is safe, using ?
 		res, err := db.Exec(
-			fmt.Sprintf("INSERT INTO users VALUES (\"%s\", \"%s\")", u.Name, hash),
+			"INSERT INTO users (name, password) VALUES (?, ?)", u.Name, hash,
 		)
 		if err != nil {
 			fmt.Println("ERROR", err)

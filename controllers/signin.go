@@ -42,7 +42,8 @@ func SignIn(db *sql.DB) echo.HandlerFunc {
 		}
 		// match against existing users
 		fmt.Println(u.Name)
-		row := db.QueryRow(fmt.Sprintf("SELECT password FROM users WHERE name = '%s'", u.Name))
+		//? is safe to use in queries
+		row := db.QueryRow("SELECT password FROM users WHERE name = ?", u.Name)
 		var hash []byte
 		if err := row.Scan(&hash); err != nil {
 			return echo.NewHTTPError(http.StatusUnauthorized, "No such user")
