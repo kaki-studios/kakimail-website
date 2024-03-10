@@ -1,7 +1,6 @@
 package auth
 
 import (
-	"fmt"
 	"net/http"
 	"os"
 	"time"
@@ -107,7 +106,6 @@ func setTokenCookie(name, token string, expiration time.Time, c echo.Context) {
 func setUserCookie(user *user.User, expiration time.Time, c echo.Context) {
 	cookie := new(http.Cookie)
 	cookie.Name = "user"
-	fmt.Println("name:", user.Name)
 	cookie.Value = user.Name
 	cookie.Expires = expiration
 	cookie.Path = "/"

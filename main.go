@@ -44,7 +44,9 @@ func main() {
 		fmt.Println("successful database connection")
 	}
 	// create the table if not exists
-	_, err = db.Exec("CREATE TABLE IF NOT EXISTS users (name TEXT UNIQUE, password TEXT)")
+	_, err = db.Exec(
+		"CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY, name TEXT UNIQUE, password TEXT)",
+	)
 	if err != nil {
 		log.Fatal("no can do", err)
 	}

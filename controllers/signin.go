@@ -2,7 +2,6 @@ package controllers
 
 import (
 	"database/sql"
-	"fmt"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
@@ -40,8 +39,6 @@ func SignIn(db *sql.DB) echo.HandlerFunc {
 		if err := c.Bind(u); err != nil {
 			return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
 		}
-		// match against existing users
-		fmt.Println(u.Name)
 		//? is safe to use in queries
 		row := db.QueryRow("SELECT password FROM users WHERE name = ?", u.Name)
 		var hash []byte

@@ -34,7 +34,7 @@ func SignUp(db *sql.DB) echo.HandlerFunc {
 		}
 		// this is safe, using ?
 		res, err := db.Exec(
-			"INSERT INTO users (name, password) VALUES (?, ?)", u.Name, hash,
+			"INSERT INTO users (id, name, password) VALUES (NULL, ?, ?)", u.Name, hash,
 		)
 		if err != nil {
 			fmt.Println("ERROR", err)
