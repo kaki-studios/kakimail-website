@@ -1,5 +1,7 @@
 version: '3'
 
+name: kakimailw
+
 services:
   kakimail-website:
     build:
