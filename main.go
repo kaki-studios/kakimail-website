@@ -30,6 +30,7 @@ func (t *Template) Render(w io.Writer, name string, data interface{}, c echo.Con
 }
 
 func main() {
+	// TODO: https: https://echo.labstack.com/docs/cookbook/auto-tls#server
 	err := godotenv.Load()
 	if err != nil {
 		log.Fatal("hahah couldn't even load a .env file")
