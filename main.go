@@ -14,7 +14,9 @@ import (
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo-jwt/v4"
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 	_ "github.com/libsql/go-libsql"
+	"golang.org/x/crypto/acme/autocert"
 
 	"kaki-studios/kakimail-website/auth"
 	"kaki-studios/kakimail-website/controllers"
@@ -35,6 +37,7 @@ func main() {
 	if err != nil {
 		log.Fatal("hahah couldn't even load a .env file")
 	}
+
 	// OPEN A DB CONNECTION
 	dbName := fmt.Sprintf("file://%s/kakimail.db", os.TempDir())
 	db, err := sql.Open("libsql", dbName)
@@ -63,6 +66,12 @@ func main() {
 		templates: template.Must(template.ParseGlob("*/*.html")),
 	}
 	e := echo.New()
+	if val, _ := os.LookupEnv("DEV"); val != "true" {
+		fmt.Println("here!")
+		e.AutoTLSManager.Cache = autocert.DirCache("/var/www/.cache")
+	}
+	e.Use(middleware.Recover())
+	e.Use(middleware.Logger())
 	e.Renderer = t
 	userGroup := e.Group("/dashboard")
 	userGroup.Use(echojwt.WithConfig(echojwt.Config{
@@ -84,7 +93,12 @@ func main() {
 
 	e.GET("/user/signup", controllers.SignUpForm()).Name = "userSignUpForm"
 	e.POST("/user/signup", controllers.SignUp(db))
-	e.Logger.Fatal(e.Start(":8000"))
+
+	if val, _ := os.LookupEnv("DEV"); val != "true" {
+		e.Logger.Fatal(e.StartAutoTLS(":8000"))
+	} else {
+		e.Logger.Fatal(e.Start(":8000"))
+	}
 }
 
 // i know, its terrible!
