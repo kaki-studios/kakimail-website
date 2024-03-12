@@ -95,7 +95,7 @@ func main() {
 	e.POST("/user/signup", controllers.SignUp(db))
 
 	if val, _ := os.LookupEnv("DEV"); val != "true" {
-		e.Logger.Fatal(e.StartAutoTLS(":8000"))
+		e.Logger.Fatal(e.StartAutoTLS(":8001"))
 	} else {
 		e.Logger.Fatal(e.Start(":8000"))
 	}
