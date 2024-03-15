@@ -67,7 +67,7 @@ func main() {
 	e := echo.New()
 	if val, _ := os.LookupEnv("DEV"); val != "true" {
 		fmt.Println("here!, not dev deployment")
-		e.AutoTLSManager.HostPolicy = autocert.HostWhitelist("<DOMAIN>")
+		e.AutoTLSManager.HostPolicy = autocert.HostWhitelist("mail.kaki.foo")
 		e.AutoTLSManager.Cache = autocert.DirCache("/var/www/.cache")
 	}
 	e.Use(middleware.Recover())
