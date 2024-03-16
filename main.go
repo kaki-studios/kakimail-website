@@ -1,6 +1,7 @@
 package main
 
 import (
+	"crypto/tls"
 	"database/sql"
 	"fmt"
 	"html/template"
@@ -16,6 +17,7 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	_ "github.com/libsql/go-libsql"
+	"golang.org/x/crypto/acme"
 	"golang.org/x/crypto/acme/autocert"
 
 	"kaki-studios/kakimail-website/auth"
@@ -91,10 +93,27 @@ func main() {
 
 	if val, _ := os.LookupEnv("DEV"); val != "true" {
 		fmt.Println("using https")
-		e.AutoTLSManager.HostPolicy = autocert.HostWhitelist("mail.kaki.foo")
-		e.AutoTLSManager.Cache = autocert.DirCache("/var/www/.cache")
 		e.Pre(middleware.HTTPSRedirect())
-		e.Logger.Fatal(e.StartAutoTLS(":8001"))
+		certManager := autocert.Manager{
+			Prompt:     autocert.AcceptTOS,
+			HostPolicy: autocert.HostWhitelist("mail.kaki.foo"),
+			Cache:      autocert.DirCache("certs"),
+		}
+		server := &http.Server{
+			Addr:    ":https",
+			Handler: e,
+			TLSConfig: &tls.Config{
+				GetCertificate: certManager.GetCertificate,
+				MinVersion:     tls.VersionTLS12,
+				NextProtos:     []string{acme.ALPNProto},
+			},
+		}
+		if err := server.ListenAndServeTLS("", ""); err != http.ErrServerClosed {
+			e.Logger.Fatal(err)
+		}
+		// e.AutoTLSManager.HostPolicy = autocert.HostWhitelist("mail.kaki.foo")
+		// e.AutoTLSManager.Cache = autocert.DirCache("/var/www/.cache")
+		// e.Logger.Fatal(e.StartAutoTLS(":8001"))
 	} else {
 		e.Logger.Fatal(e.Start(":8000"))
 	}
