@@ -1,5 +1,7 @@
 package main
 
+// TODO: https://brendanr.net/blog/go-docker-https/
+
 import (
 	"crypto/tls"
 	"database/sql"
