@@ -11,5 +11,9 @@ RUN go mod download
 RUN go build
 
 EXPOSE 8000
+EXPOSE 8001
+
+VOLUME ["/certs"]
+
 
 ENTRYPOINT "./kakimail-website"
