@@ -65,11 +65,6 @@ func main() {
 		templates: template.Must(template.ParseGlob("*/*.html")),
 	}
 	e := echo.New()
-	if val, _ := os.LookupEnv("DEV"); val != "true" {
-		fmt.Println("here!, not dev deployment")
-		e.AutoTLSManager.HostPolicy = autocert.HostWhitelist("mail.kaki.foo")
-		e.AutoTLSManager.Cache = autocert.DirCache("/var/www/.cache")
-	}
 	e.Use(middleware.Recover())
 	e.Use(middleware.Logger())
 	e.Renderer = t
@@ -95,6 +90,10 @@ func main() {
 	e.POST("/user/signup", controllers.SignUp(db))
 
 	if val, _ := os.LookupEnv("DEV"); val != "true" {
+		fmt.Println("using https")
+		e.AutoTLSManager.HostPolicy = autocert.HostWhitelist("mail.kaki.foo")
+		e.AutoTLSManager.Cache = autocert.DirCache("/var/www/.cache")
+		e.Pre(middleware.HTTPSRedirect())
 		e.Logger.Fatal(e.StartAutoTLS(":8001"))
 	} else {
 		e.Logger.Fatal(e.Start(":8000"))
