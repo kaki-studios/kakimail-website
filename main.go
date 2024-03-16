@@ -100,12 +100,13 @@ func main() {
 			Cache:      autocert.DirCache("certs"),
 		}
 		server := &http.Server{
-			Addr:    ":https",
+			Addr:    ":8001",
 			Handler: e,
 			TLSConfig: &tls.Config{
 				GetCertificate: certManager.GetCertificate,
 				MinVersion:     tls.VersionTLS12,
 				NextProtos:     []string{acme.ALPNProto},
+				ServerName:     "mail.kaki.foo",
 			},
 		}
 		if err := server.ListenAndServeTLS("", ""); err != http.ErrServerClosed {
