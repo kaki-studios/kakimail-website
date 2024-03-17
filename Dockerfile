@@ -40,7 +40,7 @@ EXPOSE 8000
 
 # Mount the certificate cache directory as a volume, so it remains even after
 # we deploy a new version
-VOLUME ["/cert-cache"]
+# VOLUME ["/cert-cache"]
 
 # Run the compiled binary.
 ENTRYPOINT ["/app"]
