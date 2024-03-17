@@ -8,7 +8,7 @@ ARG GO_VERSION=1.22.1
 FROM golang:${GO_VERSION} AS builder
 
 # Git is required for fetching the dependencies.
-RUN sudo apt-get update -y && sudo apt-get install -y ca-certificates git libsqlite3-dev
+RUN apt-get update -y && apt-get install -y ca-certificates git libsqlite3-dev
 
 # Set the working directory outside $GOPATH to enable the support for modules.
 WORKDIR /src
