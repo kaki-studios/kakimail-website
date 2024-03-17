@@ -26,13 +26,9 @@ RUN go build \
     -installsuffix 'static' \
     -o /app .
 
-# Final stage: the running container.
-FROM scratch AS final
 
-# Import the compiled executable from the first stage.
-COPY --from=builder /app /app
 # Import the root ca-certificates (required for Let's Encrypt)
-COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
+COPY /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 
 # Expose the ports to our application
 EXPOSE 8001
