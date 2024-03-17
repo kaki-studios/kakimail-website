@@ -22,7 +22,7 @@ RUN go mod download
 COPY ./ ./
 
 # Build the executable to `/app`. Mark the build as statically linked.
-RUN CGO_ENABLED=0 go build \
+RUN go build \
     # -installsuffix 'static' \
     -o /app .
 
