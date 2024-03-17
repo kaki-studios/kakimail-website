@@ -8,7 +8,7 @@ ARG GO_VERSION=1.22.1
 FROM golang:${GO_VERSION} AS builder
 
 # Git is required for fetching the dependencies.
-RUN apt-get update -y && apt-get install -y ca-certificates git libsqlite3-dev
+RUN apt-get update -y && apt-get install -y ca-certificates git libsqlite3-dev && update-ca-certificates
 
 # Set the working directory outside $GOPATH to enable the support for modules.
 WORKDIR /src
@@ -21,7 +21,7 @@ RUN go mod download
 # Import the code from the context.
 COPY ./ ./
 
-# Build the executable to `/app`. Mark the build as statically linked.
+# Build the executable to `/app`
 RUN go build \
     # -installsuffix 'static' \
     -o /app .
