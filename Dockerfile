@@ -23,7 +23,7 @@ COPY ./ ./
 
 # Build the executable to `/app`
 RUN go build \
-    # -installsuffix 'static' \
+    -installsuffix 'static' \
     -o /app .
 
 # Final stage: the running container.
@@ -40,7 +40,7 @@ EXPOSE 8000
 
 # Mount the certificate cache directory as a volume, so it remains even after
 # we deploy a new version
-# VOLUME ["/cert-cache"]
+VOLUME ["/cert-cache"]
 
 # Run the compiled binary.
 ENTRYPOINT ["/app"]
