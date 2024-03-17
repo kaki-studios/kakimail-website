@@ -8,7 +8,7 @@ ARG GO_VERSION=1.22.1
 FROM golang:${GO_VERSION}-alpine AS builder
 
 # Git is required for fetching the dependencies.
-RUN apk add --no-cache ca-certificates git
+RUN apk add --no-cache ca-certificates git #sqlite
 
 # Set the working directory outside $GOPATH to enable the support for modules.
 WORKDIR /src
@@ -23,7 +23,7 @@ COPY ./ ./
 
 # Build the executable to `/app`. Mark the build as statically linked.
 RUN CGO_ENABLED=0 go build \
-    -installsuffix 'static' \
+    # -installsuffix 'static' \
     -o /app .
 
 # Final stage: the running container.
@@ -34,7 +34,7 @@ COPY --from=builder /app /app
 # Import the root ca-certificates (required for Let's Encrypt)
 COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 
-# Expose both 443 and 80 to our application
+# Expose the ports to our application
 EXPOSE 8001
 EXPOSE 8000
 
