@@ -5,10 +5,10 @@
 ARG GO_VERSION=1.22.1
 
 # First stage: build the executable.
-FROM golang:${GO_VERSION}-alpine AS builder
+FROM golang:${GO_VERSION} AS builder
 
 # Git is required for fetching the dependencies.
-RUN apk add --no-cache ca-certificates git #sqlite
+RUN sudo apt-get update -y && sudo apt-get install -y ca-certificates git libsqlite3-dev
 
 # Set the working directory outside $GOPATH to enable the support for modules.
 WORKDIR /src
