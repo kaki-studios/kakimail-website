@@ -27,9 +27,6 @@ RUN go build \
     -o /app .
 
 
-# Import the root ca-certificates (required for Let's Encrypt)
-COPY /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
-
 # Expose the ports to our application
 EXPOSE 8001
 EXPOSE 8000
