@@ -95,30 +95,31 @@ func main() {
 
 	if val, _ := os.LookupEnv("DEV"); val != "true" {
 		fmt.Println("using https")
-		// e.Pre(middleware.HTTPSRedirect())
-		certManager := autocert.Manager{
-			Prompt:     autocert.AcceptTOS,
-			HostPolicy: autocert.HostWhitelist("mail.kaki.foo"),
-			Cache:      autocert.DirCache("cert-cache"),
-		}
-		server := &http.Server{
-			Addr:    ":8001",
-			Handler: e,
-			TLSConfig: &tls.Config{
-				GetCertificate: certManager.GetCertificate,
-				MinVersion:     tls.VersionTLS12,
-				NextProtos:     []string{acme.ALPNProto},
-				ServerName:     "mail.kaki.foo",
-			},
-		}
+		e.Pre(middleware.HTTPSRedirect())
+		// certManager := autocert.Manager{
+		// 	Prompt:     autocert.AcceptTOS,
+		// 	HostPolicy: autocert.HostWhitelist("mail.kaki.foo"),
+		// 	Cache:      autocert.DirCache("cert-cache"),
+		// }
+		// server := &http.Server{
+		// 	Addr:    ":8001",
+		// 	Handler: e,
+		// 	TLSConfig: &tls.Config{
+		// 		GetCertificate: certManager.GetCertificate,
+		// 		MinVersion:     tls.VersionTLS12,
+		// 		NextProtos:     []string{acme.ALPNProto},
+		// 		ServerName:     "mail.kaki.foo",
+		// 	},
+		// }
 		// redirect
-		go http.ListenAndServe(":8000", certManager.HTTPHandler(nil))
-		if err := server.ListenAndServeTLS("", ""); err != http.ErrServerClosed {
-			e.Logger.Fatal(err)
-		}
-		// e.AutoTLSManager.HostPolicy = autocert.HostWhitelist("mail.kaki.foo")
-		// e.AutoTLSManager.Cache = autocert.DirCache("/var/www/.cache")
-		// e.Logger.Fatal(e.StartAutoTLS(":8001"))
+		// go http.ListenAndServe(":8000", certManager.HTTPHandler(nil))
+		// if err := server.ListenAndServeTLS("", ""); err != http.ErrServerClosed {
+		// 	e.Logger.Fatal(err)
+		// }
+
+		e.AutoTLSManager.HostPolicy = autocert.HostWhitelist("mail.kaki.foo")
+		e.AutoTLSManager.Cache = autocert.DirCache("cert-cache")
+		e.Logger.Fatal(e.StartAutoTLS(":8001"))
 	} else {
 		e.Logger.Fatal(e.Start(":8000"))
 	}
