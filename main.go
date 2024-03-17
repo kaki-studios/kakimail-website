@@ -95,11 +95,11 @@ func main() {
 
 	if val, _ := os.LookupEnv("DEV"); val != "true" {
 		fmt.Println("using https")
-		e.Pre(middleware.HTTPSRedirect())
+		// e.Pre(middleware.HTTPSRedirect())
 		certManager := autocert.Manager{
 			Prompt:     autocert.AcceptTOS,
 			HostPolicy: autocert.HostWhitelist("mail.kaki.foo"),
-			Cache:      autocert.DirCache("certs"),
+			Cache:      autocert.DirCache("cert-cache"),
 		}
 		server := &http.Server{
 			Addr:    ":8001",
@@ -111,6 +111,8 @@ func main() {
 				ServerName:     "mail.kaki.foo",
 			},
 		}
+		// redirect
+		go http.ListenAndServe(":8000", certManager.HTTPHandler(nil))
 		if err := server.ListenAndServeTLS("", ""); err != http.ErrServerClosed {
 			e.Logger.Fatal(err)
 		}
