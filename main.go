@@ -3,7 +3,7 @@ package main
 // TODO: https://brendanr.net/blog/go-docker-https/
 
 import (
-	"crypto/tls"
+	_ "crypto/tls"
 	"database/sql"
 	"fmt"
 	"html/template"
@@ -19,7 +19,7 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	_ "github.com/libsql/go-libsql"
-	"golang.org/x/crypto/acme"
+	_ "golang.org/x/crypto/acme"
 	"golang.org/x/crypto/acme/autocert"
 
 	"kaki-studios/kakimail-website/auth"
@@ -98,7 +98,7 @@ func main() {
 		e.Pre(middleware.HTTPSRedirect())
 		// certManager := autocert.Manager{
 		// 	Prompt:     autocert.AcceptTOS,
-		// 	HostPolicy: autocert.HostWhitelist("mail.kaki.foo"),
+		// 	HostPolicy: autocert.HostWhitelist("kaki.foo"),
 		// 	Cache:      autocert.DirCache("cert-cache"),
 		// }
 		// server := &http.Server{
@@ -117,7 +117,7 @@ func main() {
 		// 	e.Logger.Fatal(err)
 		// }
 
-		e.AutoTLSManager.HostPolicy = autocert.HostWhitelist("mail.kaki.foo")
+		e.AutoTLSManager.HostPolicy = autocert.HostWhitelist("kaki.foo")
 		e.AutoTLSManager.Cache = autocert.DirCache("cert-cache")
 		e.Logger.Fatal(e.StartAutoTLS(":8001"))
 	} else {
