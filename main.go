@@ -1,7 +1,5 @@
 package main
 
-// TODO: https://brendanr.net/blog/go-docker-https/
-
 import (
 	_ "crypto/tls"
 	"database/sql"
@@ -42,7 +40,11 @@ func main() {
 	}
 
 	// OPEN A DB CONNECTION
-	dbName := fmt.Sprintf("file://%s/kakimail.db", os.TempDir())
+	currdir, err := os.Getwd()
+	if err != nil {
+		log.Fatal("couldn't get current working directory")
+	}
+	dbName := fmt.Sprintf("file://%s/data/kakimail.db", currdir)
 	db, err := sql.Open("libsql", dbName)
 	if err != nil {
 		fmt.Printf("failed to open db: %s", err)
