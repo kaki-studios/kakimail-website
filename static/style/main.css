@@ -20,6 +20,13 @@ input:focus {
   color: #ccc;
 }
 
+#logo {
+  /* width: 10em; */
+  /* background: #eee; */
+  height: 20em;
+  /* padding-bottom: 20em; */
+}
+
 #title-desc {
   text-shadow: -0.1em 0 black, 0 0.1em black, 0.1em 0 black, 0 -0.1em black;
 }
