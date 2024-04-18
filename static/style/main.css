@@ -21,10 +21,8 @@ input:focus {
 }
 
 #logo {
-  /* width: 10em; */
-  /* background: #eee; */
+  background: #fff;
   height: 20em;
-  /* padding-bottom: 20em; */
 }
 
 #title-desc {
