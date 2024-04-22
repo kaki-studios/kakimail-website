@@ -21,7 +21,8 @@ input:focus {
 }
 
 #logo {
-  height: 20em;
+
+  height: clamp(7rem, 8vw, 10rem);
 }
 
 #title-desc {
