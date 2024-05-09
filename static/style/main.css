@@ -1,10 +1,11 @@
 body {
-	font-family: sans-serif;
-	text-align: center;
+	/* font-family: sans-serif; */
+	/* text-align: center; */
   color: #eee;
   background: #121212;
 }
-html,body { height:100%; }
+html,body { height:100%; width:100%;}
+
 
 
 
@@ -12,48 +13,72 @@ input:focus {
   background-color: #333333;
 }
 
-#title {
+
+
+
+.montserrat-hero-title {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  /* Use a value from 100 to 900 */
+  font-weight: 500;
+  font-style: normal;
+
   font-size: clamp(4rem, 4vw, 9rem);
+
+  /* font-size: 100px; */
+  margin-top: clamp(1rem, 1vw, 1rem);
+
 }
 
-#title, #title-desc {
-  color: #ccc;
-}
+
 
 #logo {
 
   height: clamp(7rem, 8vw, 10rem);
+
 }
 
-#title-desc {
-  text-shadow: -0.1em 0 black, 0 0.1em black, 0.1em 0 black, 0 -0.1em black;
-}
-
-#title {
-  text-shadow: -0.05em 0 black, 0 0.05em black, 0.05em 0 black, 0 -0.05em black;
-}
 
 #landing {
-  margin-top: clamp(1rem, 1vw, 2rem);
-  margin-left: clamp(3rem, 4vw, 10rem);
+  margin-top: clamp(2rem, 5vw, 6rem);
+  margin-left: clamp(1rem, 2vw, 3rem);
+  position:relative;
+
   text-align: left;
   height: 100%;
+  width: 100%;
+  overflow: hidden;
 }
-#title-desc {
+.montserrat-title-desc {
+
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+
+
   font-size: clamp(2rem, 2vw, 3rem);
   margin-top: 2em;
   margin-bottom: clamp(2rem, 7vw, 10rem);
 }
 
-.text {
+.montserrat-text {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+
+
+ 
   font-size: clamp(1rem, 2vw, 3rem);
   text-align: left;
   margin-left: clamp(1rem, 2vw, 3rem);
 }
 
 #image {
-  overflow: auto;
-  background-image: url(../assets/background.jpg);
+  overflow: hidden;
+
+  background-image: url(../assets/bluemarble2_edited.png);
   background-repeat:no-repeat,repeat,no-repeat;
   background-size: cover;
   background-position: center top;
@@ -61,9 +86,11 @@ input:focus {
   position:fixed;
   width:100%;
   height: 100%;
+  vertical-align: bottom;
   top:0px;
   left:0px;
   right: 0px;
+  bottom:0px;
   z-index:-3;
 }
 
@@ -71,15 +98,23 @@ input:focus {
   position: relative;
   overflow: hidden;
   background-color: #121212;
-  margin-top: 10px;
-  padding-top: 10px;
+  vertical-align: top;
+  margin: 0 auto;
+  /* margin-top: 10px; */
+  /* padding-top: 10px; */
   margin-left: -8px;
-  margin-right: -8px;
-  left: 0px;
+  
+  /* margin-right: -8px; */
 }
 
 
 .button {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+
+  margin-right: clamp(1rem, 1vw, 1rem); 
   font-size: clamp(1rem, 2vw, 4rem);
   display: inline-block;
   padding: 15px 25px;
@@ -87,11 +122,11 @@ input:focus {
   text-align: center;
   text-decoration: none;
   outline: none;
-  color: white;
-  background-color: #333;
+  color: black;
+  background-color: #eee;
   border: none;
   border-radius: 15px;
-  box-shadow: 0 9px #222;
+  /* box-shadow: 0 9px #222; */
 }
 
 
