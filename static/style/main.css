@@ -2,10 +2,15 @@ body {
 	/* font-family: sans-serif; */
 	/* text-align: center; */
   color: #eee;
-  background: #121212;
+  background: #111111;
 }
 html,body { height:100%; width:100%;}
 
+
+
+#errors {
+  color: #f11;
+}
 
 
 
@@ -72,6 +77,12 @@ input:focus {
  
   font-size: clamp(1rem, 2vw, 3rem);
   text-align: left;
+  /* shouldn't really be here */
+  margin-left: clamp(1rem, 2vw, 3rem);
+}
+
+.button-offset {
+
   margin-left: clamp(1rem, 2vw, 3rem);
 }
 
@@ -97,8 +108,8 @@ input:focus {
 #intro {
   position: relative;
   overflow: hidden;
-  background-color: #121212;
   vertical-align: top;
+  background-color: #111111;
   margin: 0 auto;
   /* margin-top: 10px; */
   /* padding-top: 10px; */
@@ -130,14 +141,11 @@ input:focus {
 
 
 .button:hover {
-  background-color: #444;
+  background-color: #aaa;
 }
 
 .button:active {
-  background-color: #555;
-  box-shadow: 0 5px #222;
-  transform: translateY(4px);
-
+  background-color: #777;
 }
 
 

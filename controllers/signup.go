@@ -17,7 +17,10 @@ import (
 
 func SignUpForm() echo.HandlerFunc {
 	return func(c echo.Context) error {
-		return c.Render(http.StatusOK, "signup.html", nil)
+		return c.Render(http.StatusOK, "signup.html", map[string]interface{}{
+			"Title":    "Sign Up",
+			"Endpoint": "/user/signup",
+		})
 	}
 }
 
@@ -28,6 +31,17 @@ func SignUp(db *sql.DB) echo.HandlerFunc {
 		if err := c.Bind(u); err != nil {
 			return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
 		}
+		// i really miss match from Rust, this is horrendous
+		if u.Name == "" {
+			if u.Password == "" {
+				return c.String(http.StatusBadRequest, "Name and password can't be empty")
+			}
+			return c.String(http.StatusBadRequest, "Name can't be empty")
+		}
+		if u.Password == "" {
+			return c.String(http.StatusBadRequest, "Password can't be empty")
+		}
+
 		hash, err := bcrypt.GenerateFromPassword([]byte(u.Password), 8)
 		if err != nil {
 			return err
@@ -45,7 +59,7 @@ func SignUp(db *sql.DB) echo.HandlerFunc {
 			fmt.Println("ERROR", err)
 			return err
 		} else if val == 0 {
-			return c.String(400, "user already exists")
+			return c.String(http.StatusConflict, "User already exists")
 		}
 
 		err = auth.GenerateTokensAndSetCookies(u, c)
@@ -53,7 +67,8 @@ func SignUp(db *sql.DB) echo.HandlerFunc {
 			return echo.NewHTTPError(http.StatusUnauthorized, "Token is incorrect")
 		}
 
-		return c.Redirect(http.StatusMovedPermanently, "/dashboard")
+		c.Response().Header().Add("HX-Redirect", "/dashboard")
+		return c.Redirect(http.StatusOK, "/dashboard")
 		// return c.Render(http.StatusOK, "success.html", dict)
 	}
 }

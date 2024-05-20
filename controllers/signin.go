@@ -25,7 +25,10 @@ func Dashboard() echo.HandlerFunc {
 // SignInForm responsible for signIn Form rendering.
 func SignInForm() echo.HandlerFunc {
 	return func(c echo.Context) error {
-		return c.Render(http.StatusOK, "signIn.html", nil)
+		return c.Render(http.StatusOK, "signup.html", map[string]interface{}{
+			"Title":    "Sign In",
+			"Endpoint": "/user/signin",
+		})
 	}
 }
 
@@ -43,21 +46,24 @@ func SignIn(db *sql.DB) echo.HandlerFunc {
 		row := db.QueryRow("SELECT password FROM users WHERE name = ?", u.Name)
 		var hash []byte
 		if err := row.Scan(&hash); err != nil {
-			return echo.NewHTTPError(http.StatusUnauthorized, "No such user")
+			// return echo.NewHTTPError(http.StatusUnauthorized, "No such user")
+			return c.String(http.StatusUnauthorized, "No such user")
 		}
 
 		// Compare the stored hashed password, with the hashed version of the password that was received.
 		if err := bcrypt.CompareHashAndPassword(hash, []byte(u.Password)); err != nil {
 			// If the two passwords don't match, return a 401 status.
 
-			return echo.NewHTTPError(http.StatusUnauthorized, "Password is incorrect")
+			// return echo.NewHTTPError(http.StatusUnauthorized, "Password is incorrect")
+			return c.String(http.StatusUnauthorized, "Password is incorrect")
 		}
 		// If password is correct, generate tokens and set cookies.
 		err := auth.GenerateTokensAndSetCookies(u, c)
 		if err != nil {
-			return echo.NewHTTPError(http.StatusUnauthorized, "Token is incorrect")
+			// return echo.NewHTTPError(http.StatusUnauthorized, "Token is incorrect")
+			return c.String(http.StatusUnauthorized, "Token is incorrect")
 		}
-
-		return c.Redirect(http.StatusMovedPermanently, "/dashboard")
+		c.Response().Header().Add("HX-Redirect", "/dashboard")
+		return c.Redirect(http.StatusOK, "/dashboard")
 	}
 }
